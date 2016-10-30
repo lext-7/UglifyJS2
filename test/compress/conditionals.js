@@ -579,6 +579,22 @@ cond_8c: {
     }
 }
 
+cond_9: {
+    options = {
+        collapse_vars:true, sequences:true, properties:true, dead_code:true, conditionals:true,
+        comparisons:true, evaluate:true, booleans:true, loops:true, unused:true, hoist_funs:true,
+        keep_fargs:true, if_return:true, join_vars:true, cascade:true, side_effects:true
+    }
+    input: {
+        function f1() { return b == c ? a + "a" : a + "b"; }
+        function f2() { return b == c ? "a" + a : "b" + a; }
+    }
+    expect: {
+        function f1() { return a + (b == c ? "a" :  "b"); }
+        function f2() { return (b == c ? "a" : "b") + a; }
+    }
+}
+
 ternary_boolean_consequent: {
     options = {
         collapse_vars:true, sequences:true, properties:true, dead_code:true, conditionals:true,
